@@ -1,0 +1,32 @@
+$primary: #3A4F7A;
+$secondary: #FFC6D3;
+
+input.PhoneInputInput:focus-visible {
+    border: none;
+    outline: none;
+}
+
+.dialog-width {
+    min-width: 600px;
+}
+
+span.icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid grey;
+    color: grey;
+    font-weight: 300;
+    border-radius: 28%;
+    padding: 14px;
+}
+
+span.icon:hover {
+    transform: scale(1.1);
+    border: 1px solid black;
+    color: black;
+}
+
+@import '~bootstrap/scss/bootstrap.scss';

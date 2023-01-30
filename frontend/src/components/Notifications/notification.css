@@ -1,0 +1,26 @@
+.remove-notification{
+    position: relative;
+    animation-duration: 3s;
+    animation-name: remove;
+}
+
+@keyframes remove {
+    0% {
+      left: 0;
+      display: block;
+    }
+    50% {
+        left: 0;
+        display: block;
+    }
+
+    70% {
+        left: 0;
+        display: block;
+    }
+  
+    to {
+        left: 1000px;
+        display: none;
+    }
+  }
