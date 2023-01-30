@@ -29,4 +29,12 @@ span.icon:hover {
     color: black;
 }
 
+.passwordIcon {
+    position: absolute;
+    right: 13px;
+    top: 32px;
+    cursor: pointer;
+}
+
+
 @import '~bootstrap/scss/bootstrap.scss';

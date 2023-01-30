@@ -2,18 +2,20 @@ import { deletePhone } from '@/api/getPhones';
 import { useUsers } from '@/api/user/getUsers';
 import { Card, Button, Table, ConfirmationDialog } from '@/components/Elements';
 import { ContentLayout } from '@/components/Layout';
-import { Phone as PhoneType, User } from '@/types';
-import React from 'react';
+import { User } from '@/types';
+import { useState } from 'react';
 import CreateEmployee from './CreateEmployee';
 import { useNotificationStore } from '@/stores/notifications';
 import { formatPhoneNumber } from 'react-phone-number-input';
 
-import './phone.css';
+import ViewEmployee from './ViewEmployee';
+import { useDisclosure } from '@/hooks/useDisclosure';
 
 export const Employee = () => {
   const { data, isLoading, refetch } = useUsers();
-  console.log(data);
-  
+  const [user, setUser] = useState<User>({} as User);
+  const { close, open, isOpen } = useDisclosure();
+
   const deleteEntry = async (id: string) => {
     await deletePhone(id);
     useNotificationStore.getState().addNotification({
@@ -24,6 +26,10 @@ export const Employee = () => {
     refetch();
   };
 
+  const handleOpen = (entry: User) =>{
+    setUser(entry);
+    open();
+  }
   return (
     <ContentLayout title="Employees">
       <Card shadow>
@@ -38,6 +44,14 @@ export const Employee = () => {
                 data={data ?? []}
                 columns={[
                   {
+                    title: 'Name',
+                    field: 'name',
+                  },
+                  {
+                    title: 'Email Address',
+                    field: 'email',
+                  },
+                  {
                     title: 'Phone Number',
                     field: 'phone',
                     Cell({ entry }) {
@@ -50,7 +64,17 @@ export const Employee = () => {
                     Cell({ entry }) {
                       return (
                         <div className="d-flex cursor-pointer">
-                          <CreateEmployee onSuccess={() => refetch()}>
+                          <span
+                            role="button"
+                            tabIndex={-1}
+                            onKeyDown={() => handleOpen(entry)}
+                            onClick={() => handleOpen(entry)}
+                            className="icon me-2"
+                            title="View"
+                          >
+                            <i className="fa-regular fa-eye" />
+                          </span>
+                          <CreateEmployee user={entry} onSuccess={() => refetch()}>
                             <span
                               role="button"
                               tabIndex={-1}
@@ -66,7 +90,7 @@ export const Employee = () => {
                           <ConfirmationDialog
                             icon="danger"
                             title="Confirmation"
-                            body="Are you sure you want to delete this number?"
+                            body="Are you sure you want to delete this user?"
                             confirmButton={
                               <Button onClick={() => deleteEntry(entry.id)} className="bg-red-500">
                                 Confirm
@@ -95,6 +119,7 @@ export const Employee = () => {
           </div>
         </div>
       </Card>
+      <ViewEmployee close={close} isOpen={isOpen} user={user}></ViewEmployee>
     </ContentLayout>
   );
 };
