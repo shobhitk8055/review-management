@@ -12,10 +12,15 @@ router
   .get(auth(), validate(userValidation.getUsers), userController.getUsers);
 
 router
+  .route('/admin/:userId')
+  .get(auth(), userController.makeAdmin)
+  .delete(auth(), userController.removeAdmin);
+
+router
   .route('/:userId')
   .get(auth('getUsers'), validate(userValidation.getUser), userController.getUser)
-  .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
-  .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
+  .patch(auth(), validate(userValidation.updateUser), userController.updateUser)
+  .delete(auth( ), validate(userValidation.deleteUser), userController.deleteUser);
 
 module.exports = router;
 

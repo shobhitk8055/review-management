@@ -8,6 +8,8 @@ import {
   XIcon,
   ClockIcon,
   PhoneIcon,
+  DocumentTextIcon,
+  ChatIcon,
 } from '@heroicons/react/outline';
 import clsx from 'clsx';
 import * as React from 'react';
@@ -24,10 +26,18 @@ type SideNavigationItem = {
 };
 
 const SideNavigation = () => {
-  const navigation = [
-    { name: 'Dashboard', to: '.', icon: HomeIcon },
-    { name: 'Employees', to: './employee', icon: PhoneIcon },
-  ].filter(Boolean) as SideNavigationItem[];
+  const { user } = useAuth();
+  const navItems = [{ name: 'Dashboard', to: '.', icon: HomeIcon }];
+  if (user) {
+    if (user.loginRole === 'admin') {
+      navItems.push({ name: 'Employees', to: './employee', icon: UserIcon });
+      navItems.push({ name: 'Reviews', to: './reviews', icon: DocumentTextIcon });
+    }
+    if (user.loginRole === 'user') {
+      navItems.push({ name: 'Review Requests', to: './review-requests', icon: ChatIcon });
+    }
+  }
+  const navigation = navItems.filter(Boolean) as SideNavigationItem[];
 
   // activeClassName="bg-gray-900 text-white"
 
@@ -67,7 +77,6 @@ const UserNavigation = () => {
   const { logout } = useAuth();
 
   const userNavigation = [
-    { name: 'Your Profile', to: './profile' },
     {
       name: 'Sign out',
       to: '',
@@ -218,7 +227,6 @@ const Sidebar = () => {
 const Logo = () => {
   return (
     <Link className="flex items-center text-white" to=".">
-      <img className="h-8 w-auto" src={logo} alt="Workflow" />
       <span className="text-xl text-white font-semibold text-decoration-none">
         Review Management
       </span>
@@ -232,7 +240,7 @@ type MainLayoutProps = {
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
-
+  const { user } = useAuth();
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
       <MobileSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -248,6 +256,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
           </button>
           <div className="flex-1 px-4 flex justify-end">
             <div className="ml-4 flex items-center md:ml-6">
+              <span>{user?.name}</span>
               <UserNavigation />
             </div>
           </div>

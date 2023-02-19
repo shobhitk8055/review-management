@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { User } = require('../models');
+const { User, Request, Feedback } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
@@ -11,6 +11,8 @@ const createUser = async (userBody) => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
+  userBody.privileges = ['user'];
+  userBody.employeeId = `EMP${Math.floor(1000 + Math.random() * 9000)}`;
   return User.create(userBody);
 };
 
@@ -75,7 +77,40 @@ const deleteUserById = async (userId) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
+  await Request.deleteMany({ employee: userId });
+  await Feedback.deleteMany({
+    $or: [{ employee: userId }, { reviewer: userId }],
+  });
   await user.remove();
+  return user;
+};
+
+/**
+ * Delete user by id
+ * @param {ObjectId} userId
+ * @returns {Promise<User>}
+ */
+const makeAdmin = async (userId) => {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  const priv = [...user.privileges];
+  priv.push('admin');
+  user.privileges = priv;
+  await user.save();
+  return user;
+};
+
+const removeAdmin = async (userId) => {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  let priv = [...user.privileges];
+  priv = priv.filter((i) => i !== 'admin');
+  user.privileges = priv;
+  await user.save();
   return user;
 };
 
@@ -86,4 +121,6 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  makeAdmin,
+  removeAdmin,
 };

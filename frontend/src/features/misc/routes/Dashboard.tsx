@@ -1,6 +1,5 @@
 import { ContentLayout } from '@/components/Layout';
 import { useAuth } from '@/lib/auth';
-import { ROLES } from '@/lib/authorization';
 
 export const Dashboard = () => {
   const { user } = useAuth();
@@ -10,7 +9,7 @@ export const Dashboard = () => {
         Welcome <b>{`${user?.name}`}</b>
       </h1>
       <h4 className="my-3">
-        Your role is : <b>{user?.role}</b>
+        Your role is : <b>{user?.role === 'admin' ? 'Admin' : 'Employee'}</b>
       </h4>
     </ContentLayout>
   );

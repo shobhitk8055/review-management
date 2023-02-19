@@ -5,6 +5,7 @@ import { UserResponse } from '../types';
 export type LoginCredentialsDTO = {
   email: string;
   password: string;
+  loginRole: string;
 };
 
 export const loginWithEmailAndPassword = (data: LoginCredentialsDTO): Promise<UserResponse> => {

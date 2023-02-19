@@ -22,11 +22,6 @@ axios.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    if (error.response.status === 401) {
-      storage.clearToken();
-      window.location.assign(window.location.origin as unknown as string);
-    }
-
     const message = error.response?.data?.message || error.message;
     useNotificationStore.getState().addNotification({
       type: 'error',

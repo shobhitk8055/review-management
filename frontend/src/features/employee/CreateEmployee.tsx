@@ -10,7 +10,7 @@ import { useDisclosure } from '@/hooks/useDisclosure';
 import { Form, InputField } from '@/components/Form';
 import { useNotificationStore } from '@/stores/notifications';
 import { User } from '@/types';
-import { createUser, CreateUserDTO, updateUser } from '@/api/user/getUsers';
+import { createUser, CreateUserDTO, updateUser } from '@/api/getUsers';
 
 type FormValues = {
   name: string;
@@ -69,12 +69,14 @@ const CreateEmployee = ({
   const handleSubmit = async (values: FormValues) => {
     if (checkNumber()) {
       let message;
-      const payload: CreateUserDTO = { ...values, phone: value?.toString() ?? '', role: 'user' };
+      const payload: CreateUserDTO = { ...values, phone: value?.toString() ?? '' };
       if (user) {
         delete payload.password;
+        delete payload.email;
         await updateUser(user.id, payload);
         message = 'Employee updated successfully!';
       } else {
+        payload.role = 'user';
         await createUser(payload);
         message = 'Employee added successfully!';
       }
@@ -124,6 +126,7 @@ const CreateEmployee = ({
                     label="Email"
                     error={formState.errors['email']}
                     registration={register('email')}
+                    disabled={!!user}
                   />
 
                   <label

@@ -5,7 +5,8 @@ export type AuthUser = {
   firstName: string;
   lastName: string;
   bio: string;
-  role: 'ADMIN' | 'USER';
+  loginRole: string;
+  role: 'admin' | 'user';
 };
 
 export type Token = {

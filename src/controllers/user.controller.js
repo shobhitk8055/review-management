@@ -9,6 +9,16 @@ const createUser = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(user);
 });
 
+const makeAdmin = catchAsync(async (req, res) => {
+  const user = await userService.makeAdmin(req.params.userId);
+  res.status(httpStatus.OK).send(user);
+});
+
+const removeAdmin = catchAsync(async (req, res) => {
+  const user = await userService.removeAdmin(req.params.userId);
+  res.status(httpStatus.OK).send(user);
+});
+
 const getUsers = catchAsync(async (req, res) => {
   const result = await userService.queryUsers();
   res.send(result);
@@ -38,4 +48,6 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  makeAdmin,
+  removeAdmin,
 };

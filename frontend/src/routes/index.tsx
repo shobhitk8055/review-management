@@ -10,7 +10,7 @@ export const AppRoutes = () => {
   const auth = useAuth();
 
   const commonRoutes = [
-    { path: '/', element: <Navigate to={auth.user ? '/app' : '/auth/login'} /> },
+    { path: '/', element: <Navigate to={auth.user ? '/app' : '/auth'} /> },
   ];
 
   const routes = auth.user ? protectedRoutes : publicRoutes;

@@ -6,8 +6,10 @@ import { MainLayout } from '@/components/Layout';
 import { lazyImport } from '@/utils/lazyImport';
 
 const { Dashboard } = lazyImport(() => import('@/features/misc'), 'Dashboard');
-const { Users } = lazyImport(() => import('@/features/users'), 'Users');
 const { Employee } = lazyImport(() => import('@/features/employee'), 'Employee');
+const { Reviews } = lazyImport(() => import('@/features/reviews'), 'Reviews');
+const { Feedback } = lazyImport(() => import('@/features/feedback'), 'Feedback');
+const { Requests } = lazyImport(() => import('@/features/reviewRequests'), 'Requests');
 
 const App = () => {
   return (
@@ -30,8 +32,10 @@ export const protectedRoutes = [
     path: '/app',
     element: <App />,
     children: [
-      { path: 'users', element: <Users /> },
       { path: 'employee', element: <Employee /> },
+      { path: 'reviews', element: <Reviews /> },
+      { path: 'review-requests', element: <Requests /> },
+      { path: 'feedback/:id', element: <Feedback /> },
       { path: '', element: <Dashboard /> },
       { path: '*', element: <Navigate to="." /> },
     ],

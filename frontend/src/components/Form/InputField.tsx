@@ -9,10 +9,19 @@ type InputFieldProps = FieldWrapperPassThroughProps & {
   className?: string;
   registration: Partial<UseFormRegisterReturn>;
   placeholder?: string;
+  disabled?: boolean;
 };
 
 export const InputField = (props: InputFieldProps) => {
-  const { type = 'text', label, className, registration, error, placeholder } = props;
+  const {
+    type = 'text',
+    label,
+    className,
+    registration,
+    error,
+    placeholder,
+    disabled = false,
+  } = props;
   const [show, setShow] = useState(false);
   return (
     <FieldWrapper label={label} error={error}>
@@ -21,6 +30,7 @@ export const InputField = (props: InputFieldProps) => {
         className={clsx('form-control', error?.message && 'is-invalid', className)}
         {...registration}
         placeholder={placeholder}
+        disabled={disabled}
       />
       {type === 'password' && (
         <span onClick={() => setShow(!show)} className={clsx('passwordIcon')}>

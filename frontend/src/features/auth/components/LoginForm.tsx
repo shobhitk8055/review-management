@@ -16,17 +16,18 @@ type LoginValues = {
 };
 
 type LoginFormProps = {
+  role: string;
   onSuccess: () => void;
 };
 
-export const LoginForm = ({ onSuccess }: LoginFormProps) => {
+export const LoginForm = ({ role, onSuccess }: LoginFormProps) => {
   const { login, isLoggingIn } = useAuth();
 
   return (
     <div>
       <Form<LoginValues, typeof schema>
         onSubmit={async (values) => {
-          await login(values);
+          await login({ ...values, loginRole: role });
           onSuccess();
         }}
         schema={schema}

@@ -2,9 +2,8 @@ const express = require('express');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const docsRoute = require('./docs.route');
-const phoneRoute = require('./phone.route');
-const daysRoute = require('./days.route');
-const twilioRoute = require('./twilio.route');
+const requestRoute = require('./request.route');
+const feedbackRoute = require('./feedback.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -19,16 +18,12 @@ const defaultRoutes = [
     route: userRoute,
   },
   {
-    path: '/phone',
-    route: phoneRoute,
+    path: '/request',
+    route: requestRoute,
   },
   {
-    path: '/day',
-    route: daysRoute,
-  },
-  {
-    path: '/twilio',
-    route: twilioRoute,
+    path: '/feedback',
+    route: feedbackRoute,
   },
 ];
 

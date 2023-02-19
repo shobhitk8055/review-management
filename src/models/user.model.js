@@ -16,6 +16,11 @@ const userSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    employeeId: {
+      type: String,
+      required: false,
+      trim: true,
+    },
     email: {
       type: String,
       required: true,
@@ -40,6 +45,7 @@ const userSchema = mongoose.Schema(
       },
       private: true, // used by the toJSON plugin
     },
+    privileges: [String],
     role: {
       type: String,
       enum: roles,

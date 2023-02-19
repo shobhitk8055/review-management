@@ -33,8 +33,7 @@ const updateUser = {
   }),
   body: Joi.object()
     .keys({
-      email: Joi.string().email(),
-      password: Joi.string().custom(password),
+      phone: Joi.string(),
       name: Joi.string(),
     })
     .min(1),

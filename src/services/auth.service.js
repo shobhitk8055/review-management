@@ -11,11 +11,23 @@ const { tokenTypes } = require('../config/tokens');
  * @param {string} password
  * @returns {Promise<User>}
  */
-const loginUserWithEmailAndPassword = async (email, password) => {
-  const user = await userService.getUserByEmail(email);
-  if (!user || !(await user.isPasswordMatch(password))) {
+const loginUserWithEmailAndPassword = async (email, password, loginRole) => {
+  let user = await userService.getUserByEmail(email);
+
+  if (!user) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
   }
+  if (!(await user.isPasswordMatch(password))) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+  }
+  if (!user.privileges.includes(loginRole)) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "You don't have enough permissions");
+  }
+  user = user.toObject();
+  user.id = user._id;
+  delete user._id;
+  delete user.__v;
+  user.loginRole = loginRole;
   return user;
 };
 
@@ -47,6 +59,8 @@ const refreshAuth = async (refreshToken) => {
     await refreshTokenDoc.remove();
     return tokenService.generateAuthTokens(user);
   } catch (error) {
+  console.log("user");
+
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
   }
 };

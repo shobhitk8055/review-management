@@ -1,5 +1,4 @@
-import { deletePhone } from '@/api/getPhones';
-import { useUsers } from '@/api/user/getUsers';
+import { useUsers, deleteEmployee } from '@/api/getUsers';
 import { Card, Button, Table, ConfirmationDialog } from '@/components/Elements';
 import { ContentLayout } from '@/components/Layout';
 import { User } from '@/types';
@@ -17,19 +16,19 @@ export const Employee = () => {
   const { close, open, isOpen } = useDisclosure();
 
   const deleteEntry = async (id: string) => {
-    await deletePhone(id);
+    await deleteEmployee(id);
     useNotificationStore.getState().addNotification({
       type: 'success',
       title: 'Success',
-      message: 'Phone number deleted successfully!',
+      message: 'Employee deleted successfully!',
     });
     refetch();
   };
 
-  const handleOpen = (entry: User) =>{
+  const handleOpen = (entry: User) => {
     setUser(entry);
     open();
-  }
+  };
   return (
     <ContentLayout title="Employees">
       <Card shadow>
@@ -43,6 +42,10 @@ export const Employee = () => {
               <Table<User>
                 data={data ?? []}
                 columns={[
+                  {
+                    title: 'Employee Id',
+                    field: 'employeeId',
+                  },
                   {
                     title: 'Name',
                     field: 'name',
@@ -90,7 +93,7 @@ export const Employee = () => {
                           <ConfirmationDialog
                             icon="danger"
                             title="Confirmation"
-                            body="Are you sure you want to delete this user?"
+                            body="Are you sure you want to delete this employee?"
                             confirmButton={
                               <Button onClick={() => deleteEntry(entry.id)} className="bg-red-500">
                                 Confirm
@@ -119,7 +122,7 @@ export const Employee = () => {
           </div>
         </div>
       </Card>
-      <ViewEmployee close={close} isOpen={isOpen} user={user}></ViewEmployee>
+      <ViewEmployee onSuccess={refetch} close={close} isOpen={isOpen} user={user}></ViewEmployee>
     </ContentLayout>
   );
 };

@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import { User } from '@/features/users';
-
 import { useAuth } from './auth';
 
 export enum ROLES {
@@ -11,20 +9,6 @@ export enum ROLES {
 
 type RoleTypes = keyof typeof ROLES;
 
-export const POLICIES = {
-  'comment:delete': (user: User) => {
-    if (user.role === 'ADMIN') {
-      return true;
-    }
-
-    if (user.role === 'USER') {
-      return true;
-    }
-
-    return false;
-  },
-};
-
 export const useAuthorization = () => {
   const { user } = useAuth();
 
@@ -32,18 +16,7 @@ export const useAuthorization = () => {
     throw Error('User does not exist!');
   }
 
-  const checkAccess = React.useCallback(
-    ({ allowedRoles }: { allowedRoles: RoleTypes[] }) => {
-      if (allowedRoles && allowedRoles.length > 0) {
-        return allowedRoles?.includes(user.role);
-      }
-
-      return true;
-    },
-    [user.role]
-  );
-
-  return { checkAccess, role: user.role };
+  return { role: user.role };
 };
 
 type AuthorizationProps = {
@@ -66,13 +39,8 @@ export const Authorization = ({
   forbiddenFallback = null,
   children,
 }: AuthorizationProps) => {
-  const { checkAccess } = useAuthorization();
 
   let canAccess = false;
-
-  if (allowedRoles) {
-    canAccess = checkAccess({ allowedRoles });
-  }
 
   if (typeof policyCheck !== 'undefined') {
     canAccess = policyCheck;

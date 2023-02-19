@@ -3,7 +3,7 @@ export type BaseEntity = {
   createdAt: string;
 };
 
-export * from './phone';
-export * from './day';
+export * from './request';
+export * from './feedback';
 export * from './timeSlot';
 export * from './user';
