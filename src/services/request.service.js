@@ -1,6 +1,4 @@
-const httpStatus = require('http-status');
 const { Request, Feedback } = require('../models');
-const ApiError = require('../utils/ApiError');
 
 const requestService = {};
 

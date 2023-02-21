@@ -5,5 +5,4 @@ export type BaseEntity = {
 
 export * from './request';
 export * from './feedback';
-export * from './timeSlot';
 export * from './user';

@@ -27,7 +27,7 @@ export const deleteRequest = (id: string): Promise<void> => {
 };
 
 export const assignEmployees = (id: string, employeeIds: string[]): Promise<void> => {
-  return axios.post(`/request/assign/${id}`, {employeeIds});
+  return axios.post(`/request/assign/${id}`, { employeeIds });
 };
 
 type QueryFnType = typeof getRequests;

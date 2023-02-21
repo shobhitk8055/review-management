@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import { Feedback, Request, User } from '../types';
+import { Feedback } from '../types';
 
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';

@@ -1,12 +1,13 @@
-const { Phone, Feedback, TimeSlot } = require('../models');
-const ApiError = require('../utils/ApiError');
+const { Feedback } = require('../models');
 
 const feedbackService = {};
 
 feedbackService.getFeedbacks = async (requestId) => {
   const feedbacks = Feedback.find({
     request: requestId,
-  }).populate('employee').populate('reviewer');
+  })
+    .populate('employee')
+    .populate('reviewer');
   return feedbacks;
 };
 

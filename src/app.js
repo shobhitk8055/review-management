@@ -21,6 +21,11 @@ if (config.env !== 'test') {
   app.use(morgan.errorHandler);
 }
 
+if (config.env === 'production') {
+  app.use(morgan.successHandlerProd);
+  app.use(morgan.successHandlerProd);
+}
+
 // set security HTTP headers
 app.use(helmet());
 

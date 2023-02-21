@@ -10,8 +10,7 @@ const getFeedbacks = catchAsync(async (req, res) => {
 });
 
 const getReviewRequests = catchAsync(async (req, res) => {
-  const id = req.user.id;
-  console.log(id);
+  const { id } = req.user;
   const requests = await Feedback.find({ reviewer: id }).populate('request').populate('employee');
   res.json(requests);
 });

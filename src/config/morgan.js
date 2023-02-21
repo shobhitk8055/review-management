@@ -18,7 +18,19 @@ const errorHandler = morgan(errorResponseFormat, {
   stream: { write: (message) => logger.error(message.trim()) },
 });
 
+const successHandlerProd = morgan(successResponseFormat, {
+  skip: (req, res) => res.statusCode >= 400,
+  stream: `${__dirname}/../success.log`,
+});
+
+const errorHandlerProd = morgan(errorResponseFormat, {
+  skip: (req, res) => res.statusCode < 400,
+  stream: `${__dirname}/../error.log`,
+});
+
 module.exports = {
   successHandler,
   errorHandler,
+  successHandlerProd,
+  errorHandlerProd,
 };

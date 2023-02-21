@@ -1,5 +1,3 @@
-import { TimeSlot } from './timeSlot';
-
 import { BaseEntity, Request, User } from '@/types';
 
 export type Feedback = {

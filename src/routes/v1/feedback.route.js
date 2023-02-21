@@ -8,12 +8,8 @@ const router = express.Router();
 
 router.route('/').get(auth(), feedbackController.getReviewRequests);
 
-router
-  .route('/:requestId')
-  .get(feedbackController.getFeedbacks);
+router.route('/:requestId').get(feedbackController.getFeedbacks);
 
-  router
-  .route('/:feedbackId')
-  .post(validate(requestValidation.addFeedback), feedbackController.addFeedback);
+router.route('/:feedbackId').post(validate(requestValidation.addFeedback), feedbackController.addFeedback);
 
 module.exports = router;

@@ -12,7 +12,7 @@ export type CreateRequestDTO = {
 type FeedbackResponse = {
   feedbacks: Feedback[];
   employee: User;
-}
+};
 
 export const getFeedback = (id: string): Promise<FeedbackResponse> => {
   return axios.get(`/feedback/${id}`);
