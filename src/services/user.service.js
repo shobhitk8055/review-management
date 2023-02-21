@@ -19,11 +19,6 @@ const createUser = async (body) => {
 
 /**
  * Query for users
- * @param {Object} filter - Mongo filter
- * @param {Object} options - Query options
- * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
- * @param {number} [options.limit] - Maximum number of results per page (default = 10)
- * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
 const queryUsers = async () => {
@@ -87,7 +82,7 @@ const deleteUserById = async (userId) => {
 };
 
 /**
- * Delete user by id
+ * Make an employee admin
  * @param {ObjectId} userId
  * @returns {Promise<User>}
  */
@@ -103,6 +98,11 @@ const makeAdmin = async (userId) => {
   return user;
 };
 
+/**
+ * Remove admin access from user
+ * @param {ObjectId} userId
+ * @returns {Promise<User>}
+ */
 const removeAdmin = async (userId) => {
   const user = await getUserById(userId);
   if (!user) {
