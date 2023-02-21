@@ -22,8 +22,7 @@ if (config.env !== 'test') {
 }
 
 if (config.env === 'production') {
-  app.use(morgan.successHandlerProd);
-  app.use(morgan.successHandlerProd);
+  app.use(morgan.responseHandlerProd);
 }
 
 // set security HTTP headers
