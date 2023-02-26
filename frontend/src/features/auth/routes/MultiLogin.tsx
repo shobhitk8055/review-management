@@ -11,10 +11,10 @@ export const MultiLogin = () => {
     <Layout title="Choose login type">
       <div className="row">
         <div className="col-6">
-          <Button onClick={() => navigate('/auth/login')}>Admin Login</Button>
+          <Button className="w-100" onClick={() => navigate('/auth/login')}>Admin Login</Button>
         </div>
         <div className="col-6">
-          <Button onClick={() => navigate('/auth/employee-login')}>Employee Login</Button>
+          <Button className="w-100" onClick={() => navigate('/auth/employee-login')}>Employee Login</Button>
         </div>
       </div>
     </Layout>

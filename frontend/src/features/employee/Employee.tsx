@@ -55,13 +55,6 @@ export const Employee = () => {
                     field: 'email',
                   },
                   {
-                    title: 'Phone Number',
-                    field: 'phone',
-                    Cell({ entry }) {
-                      return <span>{formatPhoneNumber(entry.phone)}</span>;
-                    },
-                  },
-                  {
                     title: 'Actions',
                     field: 'id',
                     Cell({ entry }) {

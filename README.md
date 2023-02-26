@@ -35,7 +35,7 @@ For admin login you can do either of the two:-
   "name": "Super admin",
   "email": "admin@yopmail.com",
   "password": "$2a$08$zhW5ESkCQt5X1PGY5ttcfO2hrdGeeSfv9IAF2irL/ZIyZvNgEWBK.",
-  "phone": "123123213",
+  "phone": "123123213", 
   "privileges": [
     "admin"
   ]
